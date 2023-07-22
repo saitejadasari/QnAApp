@@ -40,6 +40,14 @@ def text_answer():
     return response
 
 
+@app.post('/file/answer')
+def file_answer():
+    file = request.files.get('file')
+    question = request.form.get('question')
+    content = textController.answer_question_from_upload_file(file, question)
+    return content
+
+
 @app.get('/index/status')
 def get_index_status():
     response = textController.get_index_status()

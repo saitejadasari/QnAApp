@@ -1,7 +1,7 @@
 from utils import util
 from services.pineconeService import PineconeService
 from services import answerService
-
+import json
 
 def upload_text(request):
     response = {'status': 200}
@@ -34,6 +34,15 @@ def answer_question_text(question, index_name):
 
 def answer_question(question, context):
     response = answerService.extract_answer(question, [context], sort=False)
+    return response
+
+
+def answer_question_from_upload_file(file, question):
+    content = ''
+    data_list = list(file.readlines())
+    for data in data_list:
+        content = content + ' ' + data.decode('utf-8')
+    response = answer_question(question, content)
     return response
 
 
