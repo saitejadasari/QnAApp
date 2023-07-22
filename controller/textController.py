@@ -1,7 +1,7 @@
 from utils import util
 from services.pineconeService import PineconeService
 from services import answerService
-import json
+
 
 def upload_text(request):
     response = {'status': 200}
