@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 from controller import textController
 from services import qna as qna
@@ -6,9 +6,9 @@ from services import qna as qna
 app = Flask(__name__)
 
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 @app.post('/context/answer')
@@ -16,7 +16,10 @@ def answer_question():
     req = request.json
     ques = req['question']
     context = req['context']
+    print(context)
+    print(ques)
     result = textController.answer_question(ques, context)
+    print(result,"res")
     return result
 
 
@@ -38,14 +41,6 @@ def text_answer():
     index = req['index_name']
     response = textController.answer_question_text(question, index)
     return response
-
-
-@app.post('/file/answer')
-def file_answer():
-    file = request.files.get('file')
-    question = request.form.get('question')
-    content = textController.answer_question_from_upload_file(file, question)
-    return content
 
 
 @app.get('/index/status')
