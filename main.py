@@ -19,7 +19,7 @@ def answer_question():
     print(context)
     print(ques)
     result = textController.answer_question(ques, context)
-    print(result,"res")
+    print(result, "res")
     return result
 
 
@@ -41,6 +41,14 @@ def text_answer():
     index = req['index_name']
     response = textController.answer_question_text(question, index)
     return response
+
+
+@app.post('/file/answer')
+def file_answer():
+    file = request.files.get('file')
+    question = request.form.get('question')
+    content = textController.answer_question_from_upload_file(file, question)
+    return content
 
 
 @app.get('/index/status')
